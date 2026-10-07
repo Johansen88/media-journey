@@ -54,6 +54,13 @@ def serve_index():
 def serve_admin():
     return send_from_directory(BASE_DIR, 'admin.html')
 
+@app.route('/<path:filename>')
+def serve_static(filename):
+    # Mengizinkan frontend memanggil file gambar (seperti qris.jpg)
+    if filename.endswith(('.jpg', '.png', '.jpeg', '.svg', '.gif')):
+        return send_from_directory(BASE_DIR, filename)
+    return "File Not Found", 404
+
 # ----------------- ROUTES API -----------------
 @app.route('/api/contact', methods=['POST'])
 @limiter.limit("5 per day") # SECURITY: Mencegah spam (1 IP = maks 5 pesan per hari)
