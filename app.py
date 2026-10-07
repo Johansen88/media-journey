@@ -10,6 +10,7 @@ import os
 # Memuat Environment Variables dari file .env
 load_dotenv()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 
 # SECURITY 1: CORS Protection
@@ -23,7 +24,8 @@ limiter = Limiter(
     storage_uri="memory://"
 )
 
-DB_FILE = 'leads.db'
+# Vercel filesystem is read-only except untuk folder /tmp. 
+DB_FILE = '/tmp/leads.db' if os.environ.get('VERCEL') else 'leads.db'
 # SECURITY 3: Secret Key disimpan di Environment Variable (.env)
 ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "fallback_rahasia123") 
 
@@ -46,11 +48,11 @@ def init_db():
 # ----------------- ROUTES HTML -----------------
 @app.route('/')
 def serve_index():
-    return send_from_directory(os.getcwd(), 'media_journey_landing.html')
+    return send_from_directory(BASE_DIR, 'media_journey_landing.html')
 
 @app.route('/admin')
 def serve_admin():
-    return send_from_directory(os.getcwd(), 'admin.html')
+    return send_from_directory(BASE_DIR, 'admin.html')
 
 # ----------------- ROUTES API -----------------
 @app.route('/api/contact', methods=['POST'])

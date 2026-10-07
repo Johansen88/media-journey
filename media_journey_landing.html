@@ -90,7 +90,7 @@
                     <a href="#cara-kerja" class="text-white hover:text-gold-500 transition-colors font-medium text-sm nav-link">Cara Kerja</a>
                     <a href="#harga" class="text-white hover:text-gold-500 transition-colors font-medium text-sm nav-link">Harga</a>
                     <a href="#tim" class="text-white hover:text-gold-500 transition-colors font-medium text-sm nav-link">Tim</a>
-                    <a href="#kontak" class="bg-gold-500 hover:bg-gold-600 text-navy-900 px-6 py-2.5 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg">Konsultasi Gratis</a>
+                    <a href="#formulir" class="bg-gold-500 hover:bg-gold-600 text-navy-900 px-6 py-2.5 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg">Konsultasi Gratis</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -466,7 +466,7 @@
                         <li class="flex items-start gap-3 text-slate-400 opacity-60"><i class="fa-solid fa-xmark mt-1"></i> Tanpa produksi foto/video</li>
                         <li class="flex items-start gap-3 text-slate-400 opacity-60"><i class="fa-solid fa-xmark mt-1"></i> Laporan standar</li>
                     </ul>
-                    <a href="#kontak" class="block w-full py-4 px-4 bg-white border-2 border-navy-900 text-navy-900 text-center font-bold rounded-xl hover:bg-navy-900 hover:text-white transition-all duration-300">Pilih Starter</a>
+                    <button type="button" onclick="openPaymentModal('Starter')" class="block w-full py-4 px-4 bg-white border-2 border-navy-900 text-navy-900 text-center font-bold rounded-xl hover:bg-navy-900 hover:text-white transition-all duration-300">Pilih Starter</button>
                 </div>
 
                 <!-- Growth Package (Highlighted) -->
@@ -488,7 +488,7 @@
                         <li class="flex items-start gap-3 text-white font-medium"><i class="fa-solid fa-check text-gold-500 mt-1"></i> Copywriting persuasif & kreatif</li>
                         <li class="flex items-start gap-3 text-white font-medium"><i class="fa-solid fa-check text-gold-500 mt-1"></i> Laporan performa bulanan detail</li>
                     </ul>
-                    <a href="#kontak" class="block w-full py-4 px-4 bg-gold-500 text-navy-900 text-center font-bold rounded-xl hover:bg-gold-600 transition-all duration-300 shadow-lg transform hover:scale-105">Pilih Growth</a>
+                    <button type="button" onclick="openPaymentModal('Growth')" class="block w-full py-4 px-4 bg-gold-500 text-navy-900 text-center font-bold rounded-xl hover:bg-gold-600 transition-all duration-300 shadow-lg transform hover:scale-105">Pilih Growth</button>
                 </div>
 
                 <!-- Premium Package -->
@@ -507,7 +507,7 @@
                         <li class="flex items-start gap-3 text-slate-600 font-medium"><i class="fa-solid fa-check text-green-500 mt-1"></i> Sesi produksi skala besar</li>
                         <li class="flex items-start gap-3 text-slate-600 font-medium"><i class="fa-solid fa-check text-green-500 mt-1"></i> Konsultasi strategi intensif</li>
                     </ul>
-                    <a href="#kontak" class="block w-full py-4 px-4 bg-white border-2 border-navy-900 text-navy-900 text-center font-bold rounded-xl hover:bg-navy-900 hover:text-white transition-all duration-300">Pilih Premium</a>
+                    <button type="button" onclick="openPaymentModal('Premium')" class="block w-full py-4 px-4 bg-white border-2 border-navy-900 text-navy-900 text-center font-bold rounded-xl hover:bg-navy-900 hover:text-white transition-all duration-300">Pilih Premium</button>
                 </div>
             </div>
 
@@ -763,6 +763,40 @@
         </div>
     </footer>
 
+    <!-- 13. Payment Modal (Popup) -->
+    <div id="paymentModal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-navy-900/70 backdrop-blur-sm" id="paymentOverlay"></div>
+        
+        <!-- Modal Content -->
+        <div class="bg-white rounded-[2rem] p-8 md:p-10 max-w-md w-full relative z-10 shadow-2xl transform scale-95 transition-all duration-300" id="paymentCard">
+            <button id="closePaymentBtn" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 text-2xl transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="text-center mb-6">
+                <div class="inline-block bg-gold-100 text-gold-600 px-4 py-1 rounded-full text-xs font-bold mb-3" id="modalPackageName">Paket</div>
+                <h3 class="text-2xl font-black text-navy-900 mb-1">Scan QRIS untuk Bayar</h3>
+                <p class="text-slate-500 text-sm">Gunakan M-Banking atau e-Wallet favorit Anda.</p>
+            </div>
+            
+            <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 text-center mb-6 relative overflow-hidden group">
+                <!-- QR Code Dummy Image -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS Barcode" class="w-48 h-48 mx-auto mix-blend-multiply opacity-80 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex justify-center items-center gap-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" class="h-6" alt="QRIS">
+                </div>
+            </div>
+            
+            <div class="bg-blue-50 text-blue-800 p-4 rounded-xl text-sm mb-6 flex gap-3 items-start border border-blue-100">
+                <i class="fa-solid fa-circle-info mt-1"></i>
+                <p>Simpan bukti transfer Anda, lalu tekan tombol di bawah untuk konfirmasi pesanan di formulir.</p>
+            </div>
+            
+            <button onclick="closePaymentModalAndScroll()" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition-all shadow-lg flex items-center justify-center gap-2">
+                Lanjut Konfirmasi <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -814,7 +848,45 @@
         mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 
 
-        // --- 4. NAVBAR SCROLL EFFECT ---
+        // --- 4. PAYMENT MODAL LOGIC ---
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentCard = document.getElementById('paymentCard');
+        const paymentOverlay = document.getElementById('paymentOverlay');
+        const closePaymentBtn = document.getElementById('closePaymentBtn');
+
+        function openPaymentModal(packageName) {
+            document.getElementById('modalPackageName').textContent = "Paket " + packageName;
+            paymentModal.classList.remove('opacity-0', 'pointer-events-none');
+            paymentCard.classList.remove('scale-95');
+            paymentCard.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('opacity-0', 'pointer-events-none');
+            paymentCard.classList.remove('scale-100');
+            paymentCard.classList.add('scale-95');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function closePaymentModalAndScroll() {
+            closePaymentModal();
+            setTimeout(() => {
+                const targetForm = document.getElementById('formulir');
+                targetForm.scrollIntoView({behavior: 'smooth'});
+                
+                // Auto-fill pesan di form
+                const pkgName = document.getElementById('modalPackageName').textContent;
+                document.getElementById('message').value = "Halo, saya telah melalukan pembayaran untuk " + pkgName + " via QRIS. Berikut adalah bukti pembayarannya: (Lampirkan Bukti)";
+                
+                setTimeout(() => document.getElementById('name').focus(), 800);
+            }, 300);
+        }
+
+        closePaymentBtn?.addEventListener('click', closePaymentModal);
+        paymentOverlay?.addEventListener('click', closePaymentModal);
+
+        // --- 5. NAVBAR SCROLL EFFECT ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             const logoText = document.getElementById('logo-text');
@@ -872,13 +944,18 @@
                 
                 if (response.ok) {
                     Swal.fire({
-                        title: 'Berhasil Terkirim!',
-                        text: 'Pesan Anda sudah kami terima. Tim kami akan segera menghubungi Anda melalui WhatsApp.',
+                        title: 'Tersimpan!',
+                        text: 'Membuka obrolan WhatsApp untuk mengirim pesan...',
                         icon: 'success',
-                        confirmButtonColor: '#0a192f',
-                        confirmButtonText: 'Selesai'
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        // Arahkan ke WhatsApp
+                        const waNumber = '6281997600171';
+                        const waText = `Halo Tim Media Journey! Saya ingin berkonsultasi.%0A%0ANama: ${formData.name}%0ANo WA: ${formData.phone}%0ABrand: ${formData.company || '-'}%0A%0APesan:%0A${formData.message}`;
+                        window.open(`https://wa.me/${waNumber}?text=${waText}`, '_blank');
+                        form.reset();
                     });
-                    form.reset();
                 } else {
                     throw new Error(data.error || 'Terjadi kesalahan');
                 }
