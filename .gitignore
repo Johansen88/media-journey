@@ -24,7 +24,10 @@ venv/
 
 # Database (Do not commit real lead data)
 *.db
+*.sqlite
 *.sqlite3
+backups/
+credentials/
 
 # OS Files
 .DS_Store
