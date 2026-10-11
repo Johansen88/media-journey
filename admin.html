@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,60 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
 </head>
+
 <body class="text-slate-800">
 
     <!-- Login Screen -->
     <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-slate-900 p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
-            <div class="w-16 h-16 bg-yellow-500 rounded-xl mx-auto flex items-center justify-center text-slate-900 font-bold text-3xl mb-6 shadow-lg">M</div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">Admin Login</h2>
-            <p class="text-slate-500 mb-6 text-sm">Silakan masukkan API Key rahasia untuk melihat data leads pelanggan.</p>
+        <div class="bg-white p-8 sm:p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md text-center border border-slate-800">
+            <div class="w-16 h-16 bg-yellow-500 rounded-2xl mx-auto flex items-center justify-center text-slate-900 font-black text-3xl mb-5 shadow-lg shadow-yellow-500/20">M</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">Admin Dashboard</h2>
+            <p class="text-slate-500 mb-6 text-xs sm:text-sm">Silakan login menggunakan Username dan Password Anda.</p>
             
-            <form id="loginForm" class="space-y-4">
-                <input type="password" id="apiKey" required placeholder="Masukkan API Key" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                <button type="submit" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-all shadow-lg">Login ke Dashboard</button>
-                <div id="loginError" class="hidden text-red-500 text-sm mt-2 font-medium"></div>
+            <form id="loginForm" class="space-y-4 text-left">
+                <div>
+                    <label for="adminUsername" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Username</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="adminUsername" required placeholder="admin" value="admin"
+                            class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 text-sm bg-slate-50 focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminPassword" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="password" id="adminPassword" required placeholder="admin123" value="admin123"
+                            class="w-full pl-11 pr-11 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 text-sm bg-slate-50 focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">
+                            <i id="togglePwdIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200/70 text-[11px] text-amber-800 leading-relaxed flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info mt-0.5 text-amber-600"></i>
+                    <div>
+                        <strong>Kredensial Bawaan:</strong><br>
+                        Username: <code class="bg-amber-100 px-1 py-0.5 rounded font-mono font-bold">admin</code> | Password: <code class="bg-amber-100 px-1 py-0.5 rounded font-mono font-bold">admin123</code>
+                    </div>
+                </div>
+
+                <button type="submit" id="loginSubmitBtn"
+                    class="w-full bg-slate-900 text-white font-bold py-3.5 rounded-xl hover:bg-yellow-500 hover:text-slate-900 transition-all shadow-lg text-sm flex items-center justify-center gap-2">
+                    <span>Masuk ke Dashboard</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                <div id="loginError" class="hidden text-red-600 bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-center font-medium"></div>
             </form>
         </div>
     </div>
@@ -31,46 +71,218 @@
         <!-- Navbar -->
         <nav class="bg-slate-900 text-white py-4 px-6 shadow-lg flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center text-slate-900 font-bold text-lg">M</div>
-                <span class="font-bold text-lg tracking-tight">Leads Dashboard</span>
+                <div
+                    class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center text-slate-900 font-bold text-lg">
+                    M</div>
+                <span class="font-bold text-lg tracking-tight">Media Journey Admin</span>
             </div>
-            <button id="logoutBtn" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </button>
+            <div class="flex items-center gap-3">
+                <a href="/" target="_blank"
+                    class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5 font-semibold">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Landing Page
+                </a>
+                <button id="logoutBtn"
+                    class="text-slate-300 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium ml-2">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
         </nav>
+
+        <!-- Tab Bar -->
+        <div class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-20">
+            <div class="max-w-7xl mx-auto px-6 flex gap-6">
+                <button id="navTabLeads" onclick="switchAdminTab('leads')"
+                    class="py-4 font-bold text-sm border-b-2 border-yellow-500 text-slate-900 flex items-center gap-2 transition-colors">
+                    <i class="fa-solid fa-table-list text-yellow-500"></i> Leads Konsultasi
+                </button>
+                <button id="navTabPayment" onclick="switchAdminTab('payment')"
+                    class="py-4 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-colors">
+                    <i class="fa-solid fa-credit-card"></i> Foto & Metode Pembayaran
+                </button>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-1">Daftar Konsultasi Baru</h1>
-                    <p class="text-slate-500">Menampilkan pengajuan formulir langsung dari landing page.</p>
+            <!-- TAB 1: LEADS KONSULTASI -->
+            <div id="viewLeads">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-1">Daftar Konsultasi Baru</h1>
+                        <p class="text-slate-500 text-sm">Menampilkan pengajuan formulir langsung dari landing page.</p>
+                    </div>
+                    <button id="refreshBtn"
+                        class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl font-medium shadow-sm transition-all flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-rotate-right"></i> <span>Refresh Data</span>
+                    </button>
                 </div>
-                <button id="refreshBtn" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg font-medium shadow-sm transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-rotate-right"></i> <span>Refresh Data</span>
-                </button>
+
+                <!-- Table Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                                    <th class="p-4 font-semibold border-b border-slate-200">Waktu</th>
+                                    <th class="p-4 font-semibold border-b border-slate-200">Nama Lengkap</th>
+                                    <th class="p-4 font-semibold border-b border-slate-200">No WhatsApp</th>
+                                    <th class="p-4 font-semibold border-b border-slate-200">Brand / Perusahaan</th>
+                                    <th class="p-4 font-semibold border-b border-slate-200">Pesan</th>
+                                    <th class="p-4 font-semibold border-b border-slate-200 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsTableBody" class="divide-y divide-slate-100">
+                                <tr>
+                                    <td colspan="6" class="p-8 text-center text-slate-400">Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <!-- Table Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-500 text-sm uppercase tracking-wider">
-                                <th class="p-4 font-semibold border-b border-slate-200">Waktu</th>
-                                <th class="p-4 font-semibold border-b border-slate-200">Nama Lengkap</th>
-                                <th class="p-4 font-semibold border-b border-slate-200">No WhatsApp</th>
-                                <th class="p-4 font-semibold border-b border-slate-200">Brand / Perusahaan</th>
-                                <th class="p-4 font-semibold border-b border-slate-200">Pesan</th>
-                                <th class="p-4 font-semibold border-b border-slate-200 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leadsTableBody" class="divide-y divide-slate-100">
-                            <!-- Data will be injected here -->
-                            <tr><td colspan="6" class="p-8 text-center text-slate-400">Loading data...</td></tr>
-                        </tbody>
-                    </table>
+            <!-- TAB 2: KELOLA FOTO & METODE PEMBAYARAN -->
+            <div id="viewPayment" class="hidden">
+                <div class="mb-8">
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-1">Kelola Foto & Link Pembayaran
+                    </h1>
+                    <p class="text-slate-500 text-sm">Tempelkan link (URL) foto QRIS, Shopee, dan Bank Mandiri untuk
+                        mengubah foto yang tampil pada landing page.</p>
                 </div>
+
+                <form id="adminPaymentForm" onsubmit="saveAdminPaymentSettings(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- 1. QRIS Card -->
+                        <div
+                            class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span
+                                        class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                        <i class="fa-solid fa-qrcode"></i> Foto QRIS
+                                    </span>
+                                </div>
+                                <label for="admin_qris_image" class="block text-xs font-bold text-slate-700 mb-1">Link
+                                    Foto QRIS (URL):</label>
+                                <input type="url" id="admin_qris_image" required
+                                    placeholder="https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg"
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none mb-3"
+                                    oninput="updateAdminPreview('qris', this.value)">
+
+                                <!-- Preview Box QRIS -->
+                                <div
+                                    class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center min-h-[160px] text-center">
+                                    <img id="admin_preview_qris" src="" alt="Preview QRIS"
+                                        class="max-h-36 max-w-full object-contain rounded shadow-sm bg-white p-1"
+                                        onerror="this.onerror=null; this.src='https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg';">
+                                    <span class="text-[11px] text-slate-400 mt-2 font-medium">Tampilan Foto QRIS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Shopee Card -->
+                        <div
+                            class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span
+                                        class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                        <i class="fa-solid fa-bag-shopping"></i> Foto Shopee
+                                    </span>
+                                </div>
+                                <label for="admin_shopee_image" class="block text-xs font-bold text-slate-700 mb-1">Link
+                                    Foto Shopee (URL):</label>
+                                <input type="url" id="admin_shopee_image" required
+                                    placeholder="https://.../foto-shopee.jpg"
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:outline-none mb-3"
+                                    oninput="updateAdminPreview('shopee', this.value)">
+
+                                <div class="space-y-2 mb-3">
+                                    <div>
+                                        <label for="admin_shopee_number"
+                                            class="text-[11px] font-bold text-slate-600 block">No. HP ShopeePay:</label>
+                                        <input type="text" id="admin_shopee_number" placeholder="081997600171"
+                                            class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="admin_shopee_name"
+                                            class="text-[11px] font-bold text-slate-600 block">Nama Akun Shopee:</label>
+                                        <input type="text" id="admin_shopee_name" placeholder="Media Journey Solution"
+                                            class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                    </div>
+                                </div>
+
+                                <!-- Preview Box Shopee -->
+                                <div
+                                    class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center min-h-[140px] text-center">
+                                    <img id="admin_preview_shopee" src="" alt="Preview Shopee"
+                                        class="max-h-32 max-w-full object-contain rounded shadow-sm bg-white p-1"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/150x150?text=Preview+Shopee';">
+                                    <span class="text-[11px] text-slate-400 mt-2 font-medium">Tampilan Foto
+                                        Shopee</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Mandiri Card -->
+                        <div
+                            class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                        <i class="fa-solid fa-building-columns"></i> Foto Bank Mandiri
+                                    </span>
+                                </div>
+                                <label for="admin_mandiri_image"
+                                    class="block text-xs font-bold text-slate-700 mb-1">Link Foto Mandiri (URL):</label>
+                                <input type="url" id="admin_mandiri_image" required
+                                    placeholder="https://.../foto-mandiri.jpg"
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+                                    oninput="updateAdminPreview('mandiri', this.value)">
+
+                                <div class="space-y-2 mb-3">
+                                    <div>
+                                        <label for="admin_mandiri_account"
+                                            class="text-[11px] font-bold text-slate-600 block">Nomor Rekening
+                                            Mandiri:</label>
+                                        <input type="text" id="admin_mandiri_account" placeholder="1370012345678"
+                                            class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="admin_mandiri_name"
+                                            class="text-[11px] font-bold text-slate-600 block">Nama Pemilik
+                                            Rekening:</label>
+                                        <input type="text" id="admin_mandiri_name" placeholder="PT MEDIA JOURNEY SOLUSI"
+                                            class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    </div>
+                                </div>
+
+                                <!-- Preview Box Mandiri -->
+                                <div
+                                    class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center min-h-[140px] text-center">
+                                    <img id="admin_preview_mandiri" src="" alt="Preview Mandiri"
+                                        class="max-h-32 max-w-full object-contain rounded shadow-sm bg-white p-1"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/150x150?text=Preview+Mandiri';">
+                                    <span class="text-[11px] text-slate-400 mt-2 font-medium">Tampilan Foto
+                                        Mandiri</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Bar -->
+                    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+                        <button type="button" onclick="resetAdminPaymentSettings()"
+                            class="px-5 py-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset ke Bawaan
+                        </button>
+                        <button type="submit" id="saveAdminSettingsBtn"
+                            class="px-7 py-3 rounded-xl bg-slate-900 hover:bg-yellow-500 hover:text-slate-900 text-white font-extrabold text-xs transition-all shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Pembayaran
+                        </button>
+                    </div>
+                </form>
             </div>
         </main>
     </div>
@@ -83,84 +295,159 @@
         const tbody = document.getElementById('leadsTableBody');
         let currentApiKey = localStorage.getItem('mj_api_key') || '';
 
-        // Init check
-        if(currentApiKey) {
-            loginScreen.classList.add('hidden');
-            dashboardScreen.classList.remove('hidden');
-            fetchLeads();
+        const DEFAULT_CONFIG = {
+            qris_image: "https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg",
+            shopee_image: "https://cdn.corenexis.com/f/sof6LO4WchN.png",
+            shopee_number: "081997600171",
+            shopee_name: "Media Journey Solution",
+            mandiri_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Bank_Mandiri_logo_2016.svg/1200px-Bank_Mandiri_logo_2016.svg.png",
+            mandiri_account: "1370012345678",
+            mandiri_name: "PT MEDIA JOURNEY SOLUSI"
+        };
+
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const pwd = document.getElementById('adminPassword');
+            const icon = document.getElementById('togglePwdIcon');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pwd.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
         }
 
-        // Handle Login
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const key = document.getElementById('apiKey').value;
-            currentApiKey = key;
-            localStorage.setItem('mj_api_key', key);
-            
+        // Init check
+        if (currentApiKey) {
             loginScreen.classList.add('hidden');
             dashboardScreen.classList.remove('hidden');
             fetchLeads();
+            fetchAdminPaymentSettings();
+        }
+
+        // Handle Login via /api/login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginSubmitBtn');
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memverifikasi...';
+            loginError.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || 'Username atau password salah.');
+                }
+
+                currentApiKey = data.token;
+                localStorage.setItem('mj_api_key', data.token);
+
+                loginScreen.classList.add('hidden');
+                dashboardScreen.classList.remove('hidden');
+                fetchLeads();
+                fetchAdminPaymentSettings();
+            } catch (err) {
+                loginError.textContent = err.message || 'Login gagal. Silakan coba lagi.';
+                loginError.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Masuk ke Dashboard</span> <i class="fa-solid fa-arrow-right text-xs"></i>';
+            }
         });
 
         // Handle Logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
             currentApiKey = '';
             localStorage.removeItem('mj_api_key');
-            document.getElementById('apiKey').value = '';
+            document.getElementById('adminPassword').value = '';
             dashboardScreen.classList.add('hidden');
             loginScreen.classList.remove('hidden');
             loginScreen.classList.add('flex');
         });
 
-        // Refresh
+        // Switch Admin Tab
+        function switchAdminTab(tab) {
+            const navLeads = document.getElementById('navTabLeads');
+            const navPayment = document.getElementById('navTabPayment');
+            const viewLeads = document.getElementById('viewLeads');
+            const viewPayment = document.getElementById('viewPayment');
+
+            if (tab === 'leads') {
+                navLeads.classList.add('border-yellow-500', 'text-slate-900');
+                navLeads.classList.remove('border-transparent', 'text-slate-500');
+                navPayment.classList.remove('border-yellow-500', 'text-slate-900');
+                navPayment.classList.add('border-transparent', 'text-slate-500');
+
+                viewLeads.classList.remove('hidden');
+                viewPayment.classList.add('hidden');
+            } else {
+                navPayment.classList.add('border-yellow-500', 'text-slate-900');
+                navPayment.classList.remove('border-transparent', 'text-slate-500');
+                navLeads.classList.remove('border-yellow-500', 'text-slate-900');
+                navLeads.classList.add('border-transparent', 'text-slate-500');
+
+                viewPayment.classList.remove('hidden');
+                viewLeads.classList.add('hidden');
+                fetchAdminPaymentSettings();
+            }
+        }
+
+        // Refresh Leads
         document.getElementById('refreshBtn').addEventListener('click', () => {
             const icon = document.querySelector('#refreshBtn i');
             icon.classList.add('fa-spin');
             fetchLeads().then(() => icon.classList.remove('fa-spin'));
         });
 
-        // Fetch Data
+        // Fetch Leads
         async function fetchLeads() {
             try {
-                const res = await fetch(`/api/leads?key=${currentApiKey}`);
-                
-                // Cek status code, jika 429 Too Many Requests
-                if(res.status === 429) {
+                const res = await fetch(`/api/leads`, {
+                    headers: {
+                        'Authorization': `Bearer ${currentApiKey}`
+                    }
+                });
+                if (res.status === 429) {
                     throw new Error("Terlalu banyak permintaan refresh. Tunggu beberapa detik.");
                 }
-
                 const data = await res.json();
-                
-                if(!res.ok) {
+                if (!res.ok) {
                     throw new Error(data.error || 'Gagal memuat data');
                 }
-                
                 renderTable(data.leads);
                 loginError.classList.add('hidden');
             } catch (err) {
-                // Return to login with error
-                loginError.textContent = err.message || 'API Key salah atau sesi kadaluarsa.';
+                loginError.textContent = err.message || 'Sesi login telah berakhir.';
                 loginError.classList.remove('hidden');
                 document.getElementById('logoutBtn').click();
             }
         }
 
-        // Render Table
+        // Render Leads Table
         function renderTable(leads) {
-            if(leads.length === 0) {
+            if (leads.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400">Belum ada formulir yang masuk.</td></tr>';
                 return;
             }
-            
+
             tbody.innerHTML = leads.map(lead => {
                 const date = new Date(lead.created_at).toLocaleString('id-ID', {
-                    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit'
+                    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
-                
-                // Format nomor WhatsApp (hapus karakter selain angka)
+
                 let phoneFormatted = lead.phone.replace(/[^0-9]/g, '');
-                if(phoneFormatted.startsWith('0')) phoneFormatted = '62' + phoneFormatted.substring(1);
-                
+                if (phoneFormatted.startsWith('0')) phoneFormatted = '62' + phoneFormatted.substring(1);
+
                 const waLink = `https://wa.me/${phoneFormatted}?text=Halo%20kak%20${encodeURIComponent(lead.name)},%20kami%20dari%20Media%20Journey%20ingin%20memfollow-up%20pengajuan%20konsultasi%20di%20website...`;
 
                 return `
@@ -181,6 +468,131 @@
                 `;
             }).join('');
         }
+
+        // --- PAYMENT SETTINGS ADMIN LOGIC ---
+        function updateAdminPreview(type, url) {
+            const previewEl = document.getElementById(`admin_preview_${type}`);
+            if (!previewEl) return;
+            if (url && url.trim().length > 0) {
+                previewEl.src = url.trim();
+            } else {
+                previewEl.src = DEFAULT_CONFIG[`${type}_image`];
+            }
+        }
+
+        async function fetchAdminPaymentSettings() {
+            try {
+                const res = await fetch('/api/payment-settings');
+                let settings = DEFAULT_CONFIG;
+                if (res.ok) {
+                    settings = await res.json();
+                } else {
+                    const local = localStorage.getItem('mj_payment_settings');
+                    if (local) settings = JSON.parse(local);
+                }
+
+                document.getElementById('admin_qris_image').value = settings.qris_image || '';
+                document.getElementById('admin_shopee_image').value = settings.shopee_image || '';
+                document.getElementById('admin_shopee_number').value = settings.shopee_number || '';
+                document.getElementById('admin_shopee_name').value = settings.shopee_name || '';
+                document.getElementById('admin_mandiri_image').value = settings.mandiri_image || '';
+                document.getElementById('admin_mandiri_account').value = settings.mandiri_account || '';
+                document.getElementById('admin_mandiri_name').value = settings.mandiri_name || '';
+
+                updateAdminPreview('qris', settings.qris_image);
+                updateAdminPreview('shopee', settings.shopee_image);
+                updateAdminPreview('mandiri', settings.mandiri_image);
+            } catch (err) {
+                console.warn("Gagal fetch settings:", err);
+            }
+        }
+
+        async function saveAdminPaymentSettings(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveAdminSettingsBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+
+            const payload = {
+                qris_image: document.getElementById('admin_qris_image').value.trim() || DEFAULT_CONFIG.qris_image,
+                shopee_image: document.getElementById('admin_shopee_image').value.trim() || DEFAULT_CONFIG.shopee_image,
+                shopee_number: document.getElementById('admin_shopee_number').value.trim() || DEFAULT_CONFIG.shopee_number,
+                shopee_name: document.getElementById('admin_shopee_name').value.trim() || DEFAULT_CONFIG.shopee_name,
+                mandiri_image: document.getElementById('admin_mandiri_image').value.trim() || DEFAULT_CONFIG.mandiri_image,
+                mandiri_account: document.getElementById('admin_mandiri_account').value.trim() || DEFAULT_CONFIG.mandiri_account,
+                mandiri_name: document.getElementById('admin_mandiri_name').value.trim() || DEFAULT_CONFIG.mandiri_name
+            };
+
+            localStorage.setItem('mj_payment_settings', JSON.stringify(payload));
+
+            try {
+                const res = await fetch('/api/payment-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    Swal.fire({
+                        title: 'Tersimpan!',
+                        text: 'Link foto QRIS, Shopee, dan Mandiri berhasil disimpan & aktif di landing page.',
+                        icon: 'success',
+                        confirmButtonColor: '#0f172a'
+                    });
+                } else {
+                    throw new Error('Gagal simpan ke server, namun tersimpan di lokal');
+                }
+            } catch (err) {
+                Swal.fire({
+                    title: 'Tersimpan di Browser',
+                    text: 'Pengaturan berhasil disimpan di cache lokal browser.',
+                    icon: 'info',
+                    confirmButtonColor: '#0f172a'
+                });
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Pembayaran';
+            }
+        }
+
+        function resetAdminPaymentSettings() {
+            Swal.fire({
+                title: 'Reset ke Bawaan?',
+                text: 'Semua link foto akan dikembalikan ke settingan bawaan.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0f172a',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Reset',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('admin_qris_image').value = DEFAULT_CONFIG.qris_image;
+                    document.getElementById('admin_shopee_image').value = DEFAULT_CONFIG.shopee_image;
+                    document.getElementById('admin_shopee_number').value = DEFAULT_CONFIG.shopee_number;
+                    document.getElementById('admin_shopee_name').value = DEFAULT_CONFIG.shopee_name;
+                    document.getElementById('admin_mandiri_image').value = DEFAULT_CONFIG.mandiri_image;
+                    document.getElementById('admin_mandiri_account').value = DEFAULT_CONFIG.mandiri_account;
+                    document.getElementById('admin_mandiri_name').value = DEFAULT_CONFIG.mandiri_name;
+
+                    updateAdminPreview('qris', DEFAULT_CONFIG.qris_image);
+                    updateAdminPreview('shopee', DEFAULT_CONFIG.shopee_image);
+                    updateAdminPreview('mandiri', DEFAULT_CONFIG.mandiri_image);
+
+                    localStorage.setItem('mj_payment_settings', JSON.stringify(DEFAULT_CONFIG));
+                    try {
+                        await fetch('/api/payment-settings', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(DEFAULT_CONFIG)
+                        });
+                    } catch (e) { }
+
+                    Swal.fire('Selesai!', 'Gambar pembayaran telah direset ke bawaan.', 'success');
+                }
+            });
+        }
     </script>
 </body>
+
 </html>

@@ -75,6 +75,26 @@
             transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+
+        /* Modern sleek scrollbar for modal */
+        #paymentCard::-webkit-scrollbar,
+        #paymentSettingsModal div::-webkit-scrollbar {
+            width: 6px;
+        }
+        #paymentCard::-webkit-scrollbar-track,
+        #paymentSettingsModal div::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 9999px;
+        }
+        #paymentCard::-webkit-scrollbar-thumb,
+        #paymentSettingsModal div::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        #paymentCard::-webkit-scrollbar-thumb:hover,
+        #paymentSettingsModal div::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
 
@@ -669,27 +689,135 @@
                 </div>
             </div>
 
-            <!-- Metode Pembayaran Supported -->
-            <div class="mt-20 pt-12 border-t border-slate-200 text-center" data-aos="fade-up">
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Pembayaran Mudah & Aman via:
-                </p>
+            <!-- Metode Pembayaran Supported & Interaktif -->
+            <div id="metode-pembayaran" class="mt-20 pt-12 border-t border-slate-200 text-center" data-aos="fade-up">
                 <div
-                    class="flex flex-wrap justify-center items-center gap-8 md:gap-14 opacity-80 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 bg-white py-6 px-8 rounded-3xl shadow-sm border border-slate-100 inline-flex">
-                    <!-- QRIS -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" alt="QRIS"
-                        class="h-7 md:h-9 object-contain" title="Bayar Praktis dengan QRIS">
-                    <!-- ShopeePay -->
-                    <img src="https://ibb.co.com/xKQb611h" alt="ShopeePay" class="h-9 md:h-12 object-contain"
-                        title="ShopeePay">
-                    <!-- SPayLater -->
-                    <div class="flex items-center gap-2" title="Bisa Dicicil dengan SPayLater">
-                        <img src="https://ibb.co.com/xKQb611h" alt="Shopee"
-                            class="h-9 md:h-12 object-contain filter hue-rotate-180">
-                        <span class="font-black text-[#ee4d2d] italic text-lg md:text-xl -ml-2">SPayLater</span>
+                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-100 text-gold-700 font-bold text-xs uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-shield-halved"></i> Pembayaran Resmi & Terverifikasi
+                </div>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-navy-900 mb-2">Metode Pembayaran Praktis</h3>
+                <p class="text-slate-500 text-sm md:text-base max-w-xl mx-auto mb-6">
+                    Klik langsung salah satu foto / metode di bawah untuk membuka rincian akun & segera melakukan
+                    pembayaran:
+                </p>
+
+                <!-- Tombol Atur Link Foto -->
+                <div class="mb-8">
+                    <button type="button" onclick="openPaymentSettingsModal()"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-navy-900 text-navy-900 hover:text-white font-semibold text-xs md:text-sm rounded-xl border-2 border-slate-200 hover:border-navy-900 shadow-sm transition-all duration-300 transform hover:scale-105 group">
+                        <i class="fa-solid fa-link text-gold-500 group-hover:text-gold-400"></i>
+                        <span>Tempel / Ubah Link Foto QRIS, Shopee & Mandiri</span>
+                        <i class="fa-solid fa-pen-to-square text-xs opacity-60"></i>
+                    </button>
+                </div>
+
+                <!-- 3 Kartu Pembayaran Interaktif -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto text-left">
+                    <!-- Kartu 1: QRIS -->
+                    <div onclick="openPaymentModalWithMethod('qris', 'Umum')"
+                        class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-emerald-500 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span
+                                    class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <i class="fa-solid fa-qrcode"></i> QRIS Instan
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium">Semua E-Wallet</span>
+                            </div>
+
+                            <div
+                                class="bg-slate-50 rounded-2xl p-4 my-2 flex items-center justify-center h-48 border border-slate-100 relative overflow-hidden group-hover:bg-emerald-50/40 transition-colors">
+                                <img id="card-img-qris" src="https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg" alt="QRIS Media Journey"
+                                    onerror="this.onerror=null; this.src='qris.jpg';"
+                                    class="max-h-full max-w-full object-contain rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                <div
+                                    class="absolute inset-0 bg-navy-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-sm gap-2 backdrop-blur-[2px]">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Klik untuk Bayar
+                                </div>
+                            </div>
+
+                            <h4
+                                class="font-extrabold text-lg text-navy-900 group-hover:text-emerald-600 transition-colors mt-3">
+                                QRIS All Payment</h4>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">BCA, Mandiri, BRI, BNI, GoPay, OVO,
+                                Dana, ShopeePay & LinkAja.</p>
+                        </div>
+                        <button type="button"
+                            class="w-full mt-5 py-3 bg-navy-900 group-hover:bg-emerald-600 text-white font-bold rounded-xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md">
+                            <span>Bayar via QRIS</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
                     </div>
-                    <!-- Mandiri -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Bank_Mandiri_logo_2016.svg"
-                        alt="Mandiri" class="h-7 md:h-9 object-contain" title="Transfer Bank Mandiri">
+
+                    <!-- Kartu 2: Shopee / ShopeePay -->
+                    <div onclick="openPaymentModalWithMethod('shopee', 'Umum')"
+                        class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-orange-500 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span
+                                    class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bag-shopping"></i> ShopeePay
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium">Bisa SPayLater</span>
+                            </div>
+
+                            <div
+                                class="bg-slate-50 rounded-2xl p-4 my-2 flex items-center justify-center h-48 border border-slate-100 relative overflow-hidden group-hover:bg-orange-50/40 transition-colors">
+                                <img id="card-img-shopee" src="" alt="Shopee Media Journey"
+                                    class="max-h-full max-w-full object-contain rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                <div
+                                    class="absolute inset-0 bg-navy-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-sm gap-2 backdrop-blur-[2px]">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Klik untuk Bayar
+                                </div>
+                            </div>
+
+                            <h4
+                                class="font-extrabold text-lg text-navy-900 group-hover:text-orange-600 transition-colors mt-3">
+                                Shopee / ShopeePay</h4>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">Bayar langsung lewat aplikasi Shopee,
+                                transfer nomor, atau cicil SPayLater.</p>
+                        </div>
+                        <button type="button"
+                            class="w-full mt-5 py-3 bg-navy-900 group-hover:bg-[#ee4d2d] text-white font-bold rounded-xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md">
+                            <span>Bayar via Shopee</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Kartu 3: Bank Mandiri -->
+                    <div onclick="openPaymentModalWithMethod('mandiri', 'Umum')"
+                        class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-blue-500 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span
+                                    class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <i class="fa-solid fa-building-columns"></i> Bank Mandiri
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium">Livin' & ATM</span>
+                            </div>
+
+                            <div
+                                class="bg-slate-50 rounded-2xl p-4 my-2 flex items-center justify-center h-48 border border-slate-100 relative overflow-hidden group-hover:bg-blue-50/40 transition-colors">
+                                <img id="card-img-mandiri" src="" alt="Mandiri Media Journey"
+                                    class="max-h-full max-w-full object-contain rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                <div
+                                    class="absolute inset-0 bg-navy-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-sm gap-2 backdrop-blur-[2px]">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Klik untuk Bayar
+                                </div>
+                            </div>
+
+                            <h4
+                                class="font-extrabold text-lg text-navy-900 group-hover:text-blue-600 transition-colors mt-3">
+                                Bank Mandiri / Livin'</h4>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">Transfer via Livin' by Mandiri, ATM,
+                                atau Internet Banking dengan verifikasi cepat.</p>
+                        </div>
+                        <button type="button"
+                            class="w-full mt-5 py-3 bg-navy-900 group-hover:bg-blue-600 text-white font-bold rounded-xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md">
+                            <span>Bayar via Mandiri</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -996,46 +1124,427 @@
         </div>
     </footer>
 
-    <!-- 13. Payment Modal (Popup) -->
+    <!-- 13. Upgraded Payment Modal (Popup Interaktif: QRIS, Shopee, Mandiri) -->
     <div id="paymentModal"
         class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-navy-900/70 backdrop-blur-sm" id="paymentOverlay"></div>
+        <div class="absolute inset-0 bg-navy-900/75 backdrop-blur-md" id="paymentOverlay"></div>
 
         <!-- Modal Content -->
-        <div class="bg-white rounded-[2rem] p-8 md:p-10 max-w-md w-full relative z-10 shadow-2xl transform scale-95 transition-all duration-300"
+        <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 md:p-9 max-w-lg w-full relative z-10 shadow-2xl transform scale-95 transition-all duration-300 max-h-[92vh] overflow-y-auto"
             id="paymentCard">
+            <!-- Close Button -->
             <button id="closePaymentBtn"
-                class="absolute top-5 right-5 text-slate-400 hover:text-red-500 text-2xl transition-colors"><i
-                    class="fa-solid fa-xmark"></i></button>
-
-            <div class="text-center mb-6">
-                <div class="inline-block bg-gold-100 text-gold-600 px-4 py-1 rounded-full text-xs font-bold mb-3"
-                    id="modalPackageName">Paket</div>
-                <h3 class="text-2xl font-black text-navy-900 mb-1">Scan QRIS untuk Bayar</h3>
-                <p class="text-slate-500 text-sm">Gunakan M-Banking atau e-Wallet favorit Anda.</p>
-            </div>
-
-            <div
-                class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-center mb-6 relative overflow-hidden group">
-                <!-- QR Code Asli -->
-                <img src="/qris.jpg" alt="QRIS Barcode Johansen Haris"
-                    class="w-full max-w-[200px] mx-auto rounded-lg shadow-sm group-hover:scale-105 transition-transform">
-                <div class="mt-4 flex justify-center items-center gap-2">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" class="h-6" alt="QRIS">
-                </div>
-            </div>
-
-            <div
-                class="bg-blue-50 text-blue-800 p-4 rounded-xl text-sm mb-6 flex gap-3 items-start border border-blue-100">
-                <i class="fa-solid fa-circle-info mt-1"></i>
-                <p>Simpan bukti transfer Anda, lalu tekan tombol di bawah untuk konfirmasi pesanan di formulir.</p>
-            </div>
-
-            <button onclick="closePaymentModalAndScroll()"
-                class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition-all shadow-lg flex items-center justify-center gap-2">
-                Lanjut Konfirmasi <i class="fa-solid fa-arrow-right"></i>
+                class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 flex items-center justify-center text-xl transition-all">
+                <i class="fa-solid fa-xmark"></i>
             </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-5 pr-8">
+                <div
+                    class="inline-flex items-center gap-2 bg-gold-100 text-gold-700 px-4 py-1 rounded-full text-xs font-bold mb-2 shadow-sm">
+                    <i class="fa-solid fa-cart-shopping text-xs"></i>
+                    <span id="modalPackageName">Paket Konsultasi</span>
+                </div>
+                <h3 class="text-2xl font-black text-navy-900" id="modalMainTitle">Pembayaran Cepat & Aman</h3>
+                <p class="text-slate-500 text-xs mt-1" id="modalSubTitle">Pilih metode yang Anda inginkan, selesaikan
+                    pembayaran, lalu konfirmasi.</p>
+            </div>
+
+            <!-- Tab Buttons (QRIS, Shopee, Mandiri) -->
+            <div class="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl mb-6">
+                <button type="button" id="tabBtnQris" onclick="switchPaymentTab('qris')"
+                    class="py-2.5 px-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm border border-emerald-200">
+                    <i class="fa-solid fa-qrcode"></i> <span>QRIS</span>
+                </button>
+                <button type="button" id="tabBtnShopee" onclick="switchPaymentTab('shopee')"
+                    class="py-2.5 px-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 hover:text-orange-600">
+                    <i class="fa-solid fa-bag-shopping"></i> <span>Shopee</span>
+                </button>
+                <button type="button" id="tabBtnMandiri" onclick="switchPaymentTab('mandiri')"
+                    class="py-2.5 px-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 hover:text-blue-600">
+                    <i class="fa-solid fa-building-columns"></i> <span>Mandiri</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: QRIS CONTENT -->
+            <div id="tabPanelQris" class="space-y-4">
+                <div
+                    class="bg-gradient-to-b from-emerald-50/50 to-slate-50 border-2 border-emerald-200/80 rounded-2xl p-5 text-center relative group">
+                    <div class="mb-3">
+                        <span
+                            class="text-xs font-black tracking-wider uppercase text-emerald-800 bg-emerald-100/80 px-3 py-1 rounded-full">
+                            Scan QRIS Semua Bank & E-Wallet
+                        </span>
+                    </div>
+
+                    <!-- Foto QRIS Dinamis -->
+                    <div class="relative inline-block cursor-pointer bg-white rounded-2xl shadow-sm border border-slate-200/80 p-2 overflow-hidden"
+                        onclick="zoomImage(currentPaymentSettings.qris_image || 'qris.jpg')" title="Klik untuk memperbesar">
+                        <img id="modal_qris_img" src="https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg" alt="Foto QRIS Media Journey"
+                            onerror="this.onerror=null; this.src='qris.jpg';"
+                            class="w-full max-w-[210px] mx-auto rounded-xl shadow-none object-contain group-hover:scale-105 transition-all">
+                        <span
+                            class="absolute bottom-3 right-3 bg-navy-900/80 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm pointer-events-none">
+                            <i class="fa-solid fa-expand"></i> Perbesar
+                        </span>
+                    </div>
+
+                    <div class="mt-3 flex justify-center items-center gap-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" class="h-5"
+                            alt="QRIS">
+                        <span class="text-[11px] text-slate-500 font-semibold">• Bebas Biaya Admin</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons QRIS -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button"
+                        onclick="downloadImage(currentPaymentSettings.qris_image, 'qris-media-journey.jpg')"
+                        class="py-3 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-download text-emerald-600"></i> Unduh Foto QRIS
+                    </button>
+                    <button type="button" onclick="confirmPaymentViaWhatsApp('QRIS')"
+                        class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Konfirmasi WA
+                    </button>
+                </div>
+
+                <button type="button" onclick="simulatePaymentSuccess('QRIS')"
+                    class="w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-gold-400"></i> Saya Sudah Bayar QRIS
+                </button>
+
+                <button type="button" onclick="closePaymentModalAndScroll('QRIS')"
+                    class="w-full py-2.5 text-slate-500 hover:text-navy-900 font-medium text-xs text-center transition-colors">
+                    Atau Konfirmasi Manual di Formulir Konsultasi <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+            <!-- TAB 2: SHOPEE / SHOPEEPAY CONTENT -->
+            <div id="tabPanelShopee" class="space-y-4 hidden">
+                <div
+                    class="bg-gradient-to-b from-orange-50/50 to-slate-50 border-2 border-orange-200/80 rounded-2xl p-5 text-center relative group">
+                    <div class="mb-3">
+                        <span
+                            class="text-xs font-black tracking-wider uppercase text-orange-800 bg-orange-100/80 px-3 py-1 rounded-full">
+                            ShopeePay & SPayLater
+                        </span>
+                    </div>
+
+                    <!-- Foto Shopee Dinamis -->
+                    <div class="relative inline-block cursor-pointer"
+                        onclick="zoomImage(currentPaymentSettings.shopee_image)" title="Klik untuk memperbesar">
+                        <img id="modal_shopee_img" src="" alt="Foto Shopee"
+                            class="w-full max-w-[210px] mx-auto rounded-xl shadow-md border border-slate-200/80 p-2 bg-white group-hover:scale-105 transition-all">
+                        <span
+                            class="absolute bottom-3 right-3 bg-navy-900/80 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm pointer-events-none">
+                            <i class="fa-solid fa-expand"></i> Perbesar
+                        </span>
+                    </div>
+
+                    <!-- Box Info Akun Shopee -->
+                    <div class="mt-4 p-3 bg-white rounded-xl border border-orange-100 text-left shadow-sm">
+                        <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">No. ShopeePay Tujuan:
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <div>
+                                <span id="modal_shopee_number"
+                                    class="font-mono font-extrabold text-base md:text-lg text-navy-900 tracking-wider">081997600171</span>
+                                <div class="text-[11px] text-slate-500 font-semibold" id="modal_shopee_name">a.n Media
+                                    Journey Solution</div>
+                            </div>
+                            <button type="button"
+                                onclick="copyToClipboard(currentPaymentSettings.shopee_number, 'Nomor ShopeePay')"
+                                class="px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 font-bold rounded-lg text-xs border border-orange-200 transition-colors flex items-center gap-1.5">
+                                <i class="fa-regular fa-copy"></i> Salin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Shopee -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="openShopeePayment()"
+                        class="py-3 px-3 bg-[#ee4d2d] hover:bg-[#d73f21] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md">
+                        <i class="fa-solid fa-bag-shopping"></i> Buka Shopee
+                    </button>
+                    <button type="button" onclick="confirmPaymentViaWhatsApp('ShopeePay')"
+                        class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Konfirmasi WA
+                    </button>
+                </div>
+
+                <button type="button" onclick="simulatePaymentSuccess('ShopeePay')"
+                    class="w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-gold-400"></i> Saya Sudah Bayar Shopee
+                </button>
+
+                <button type="button" onclick="closePaymentModalAndScroll('ShopeePay')"
+                    class="w-full py-2.5 text-slate-500 hover:text-navy-900 font-medium text-xs text-center transition-colors">
+                    Atau Konfirmasi Manual di Formulir Konsultasi <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+            <!-- TAB 3: BANK MANDIRI CONTENT -->
+            <div id="tabPanelMandiri" class="space-y-4 hidden">
+                <div
+                    class="bg-gradient-to-b from-blue-50/50 to-slate-50 border-2 border-blue-200/80 rounded-2xl p-5 text-center relative group">
+                    <div class="mb-3">
+                        <span
+                            class="text-xs font-black tracking-wider uppercase text-blue-800 bg-blue-100/80 px-3 py-1 rounded-full">
+                            Transfer Rekening Bank Mandiri
+                        </span>
+                    </div>
+
+                    <!-- Foto Mandiri Dinamis -->
+                    <div class="relative inline-block cursor-pointer"
+                        onclick="zoomImage(currentPaymentSettings.mandiri_image)" title="Klik untuk memperbesar">
+                        <img id="modal_mandiri_img" src="" alt="Foto Mandiri"
+                            class="w-full max-w-[210px] mx-auto rounded-xl shadow-md border border-slate-200/80 p-2 bg-white group-hover:scale-105 transition-all">
+                        <span
+                            class="absolute bottom-3 right-3 bg-navy-900/80 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm pointer-events-none">
+                            <i class="fa-solid fa-expand"></i> Perbesar
+                        </span>
+                    </div>
+
+                    <!-- Box Info Rekening Mandiri -->
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-blue-100 text-left shadow-sm">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Bank Mandiri
+                                (Kode: 008)</div>
+                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded">Rekening
+                                Resmi</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span id="modal_mandiri_account"
+                                    class="font-mono font-extrabold text-lg md:text-xl text-navy-900 tracking-wider">1370012345678</span>
+                                <div class="text-[11px] text-slate-600 font-semibold mt-0.5" id="modal_mandiri_name">a.n
+                                    PT MEDIA JOURNEY SOLUSI</div>
+                            </div>
+                            <button type="button"
+                                onclick="copyToClipboard(currentPaymentSettings.mandiri_account, 'Nomor Rekening Mandiri')"
+                                class="px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-lg text-xs border border-blue-200 transition-colors flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-regular fa-copy"></i> Salin Rekening
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Mandiri -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="openLivinMandiri()"
+                        class="py-3 px-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md">
+                        <i class="fa-solid fa-mobile-screen"></i> Buka Livin' Mandiri
+                    </button>
+                    <button type="button" onclick="confirmPaymentViaWhatsApp('Bank Mandiri')"
+                        class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Konfirmasi WA
+                    </button>
+                </div>
+
+                <button type="button" onclick="simulatePaymentSuccess('Bank Mandiri')"
+                    class="w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-gold-400"></i> Saya Sudah Transfer Mandiri
+                </button>
+
+                <button type="button" onclick="closePaymentModalAndScroll('Bank Mandiri')"
+                    class="w-full py-2.5 text-slate-500 hover:text-navy-900 font-medium text-xs text-center transition-colors">
+                    Atau Konfirmasi Manual di Formulir Konsultasi <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14. MODAL PENGATURAN LINK FOTO (Menempelkan Link Foto QRIS, Shopee, Mandiri) -->
+    <div id="paymentSettingsModal"
+        class="fixed inset-0 z-[80] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-navy-900/80 backdrop-blur-md" onclick="closePaymentSettingsModal()"></div>
+
+        <!-- Content -->
+        <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 max-w-2xl w-full relative z-10 shadow-2xl max-h-[92vh] overflow-y-auto transform scale-95 transition-all duration-300"
+            id="settingsCard">
+            <!-- Close -->
+            <button onclick="closePaymentSettingsModal()"
+                class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 flex items-center justify-center text-xl transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-left mb-6 pr-8">
+                <div
+                    class="inline-flex items-center gap-2 bg-gold-100 text-gold-700 px-3.5 py-1 rounded-full text-xs font-bold mb-2">
+                    <i class="fa-solid fa-sliders"></i> Pengaturan Foto Pembayaran
+                </div>
+                <h3 class="text-2xl font-black text-navy-900">Tempelkan Link Foto Pembayaran</h3>
+                <p class="text-slate-500 text-xs md:text-sm mt-1">
+                    Tempelkan URL link foto QRIS, Shopee, dan Bank Mandiri. Foto akan langsung di-preview di bawah kolom
+                    dan disimpan otomatis ke website.
+                </p>
+            </div>
+
+            <form id="paymentSettingsForm" onsubmit="handleSaveSettings(event)" class="space-y-6">
+                <!-- 1. QRIS Link & Preview -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="input_qris_image"
+                            class="text-xs font-black uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-qrcode text-emerald-600"></i> Link Foto QRIS
+                        </label>
+                        <span class="text-[11px] text-emerald-700 font-semibold">Tampil di Kartu & Modal</span>
+                    </div>
+                    <input type="url" id="input_qris_image" required
+                        placeholder="Tempel link foto QRIS di sini (misal: https://...)"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white mb-3"
+                        oninput="updateSettingPreview('qris', this.value)">
+
+                    <!-- Preview Box QRIS -->
+                    <div class="bg-white rounded-xl p-3 border border-emerald-100 flex items-center gap-4">
+                        <div
+                            class="w-20 h-20 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="preview_qris_setting" src="" alt="Preview QRIS"
+                                class="max-w-full max-h-full object-contain"
+                                onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=Foto+QRIS';">
+                        </div>
+                        <div class="text-xs text-slate-500">
+                            <div class="font-bold text-slate-800">Preview Foto QRIS</div>
+                            <p class="text-[11px] mt-0.5">Isi foto langsung terlihat saat link ditempelkan. Mendukung
+                                format JPG, PNG, WebP, SVG.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Shopee Link & Preview -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-orange-50/50 border border-orange-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="input_shopee_image"
+                            class="text-xs font-black uppercase tracking-wider text-orange-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-bag-shopping text-orange-600"></i> Link Foto Shopee / ShopeePay
+                        </label>
+                        <span class="text-[11px] text-orange-700 font-semibold">Tampil di Kartu & Modal</span>
+                    </div>
+                    <input type="url" id="input_shopee_image" required
+                        placeholder="Tempel link foto Shopee di sini (misal: https://...)"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm bg-white mb-3"
+                        oninput="updateSettingPreview('shopee', this.value)">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="input_shopee_number"
+                                class="text-[11px] font-bold text-slate-600 block mb-1">Nomor ShopeePay / HP:</label>
+                            <input type="text" id="input_shopee_number" placeholder="081997600171"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label for="input_shopee_name" class="text-[11px] font-bold text-slate-600 block mb-1">Nama
+                                Pemilik Akun:</label>
+                            <input type="text" id="input_shopee_name" placeholder="Media Journey Solution"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                    </div>
+
+                    <!-- Preview Box Shopee -->
+                    <div class="bg-white rounded-xl p-3 border border-orange-100 flex items-center gap-4">
+                        <div
+                            class="w-20 h-20 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="preview_shopee_setting" src="" alt="Preview Shopee"
+                                class="max-w-full max-h-full object-contain"
+                                onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=Foto+Shopee';">
+                        </div>
+                        <div class="text-xs text-slate-500">
+                            <div class="font-bold text-slate-800">Preview Foto Shopee</div>
+                            <p class="text-[11px] mt-0.5">Menampilkan gambar QR ShopeePay atau logo Shopee yang Anda
+                                masukkan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Mandiri Link & Preview -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-blue-50/50 border border-blue-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="input_mandiri_image"
+                            class="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-building-columns text-blue-600"></i> Link Foto Bank Mandiri
+                        </label>
+                        <span class="text-[11px] text-blue-700 font-semibold">Tampil di Kartu & Modal</span>
+                    </div>
+                    <input type="url" id="input_mandiri_image" required
+                        placeholder="Tempel link foto Bank Mandiri di sini (misal: https://...)"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white mb-3"
+                        oninput="updateSettingPreview('mandiri', this.value)">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="input_mandiri_account"
+                                class="text-[11px] font-bold text-slate-600 block mb-1">Nomor Rekening Mandiri:</label>
+                            <input type="text" id="input_mandiri_account" placeholder="1370012345678"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label for="input_mandiri_name" class="text-[11px] font-bold text-slate-600 block mb-1">Nama
+                                Pemilik Rekening:</label>
+                            <input type="text" id="input_mandiri_name" placeholder="PT MEDIA JOURNEY SOLUSI"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Preview Box Mandiri -->
+                    <div class="bg-white rounded-xl p-3 border border-blue-100 flex items-center gap-4">
+                        <div
+                            class="w-20 h-20 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="preview_mandiri_setting" src="" alt="Preview Mandiri"
+                                class="max-w-full max-h-full object-contain"
+                                onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=Foto+Mandiri';">
+                        </div>
+                        <div class="text-xs text-slate-500">
+                            <div class="font-bold text-slate-800">Preview Foto Bank Mandiri</div>
+                            <p class="text-[11px] mt-0.5">Menampilkan gambar QR / buku tabungan / kartu Mandiri Anda.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <button type="button" onclick="resetPaymentSettingsToDefault()"
+                        class="w-full sm:w-auto px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Reset ke Gambar Bawaan
+                    </button>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <button type="button" onclick="closePaymentSettingsModal()"
+                            class="w-1/2 sm:w-auto px-5 py-3 border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl text-xs transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit" id="saveSettingsBtn"
+                            class="w-1/2 sm:w-auto px-6 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 text-white font-extrabold rounded-xl text-xs transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Link Foto
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 15. MODAL ZOOM FOTO (Memperbesar Tampilan Foto) -->
+    <div id="imageZoomModal"
+        class="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-navy-900/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300"
+        onclick="closeImageZoom()">
+        <div class="relative max-w-xl w-full text-center" onclick="event.stopPropagation()">
+            <button onclick="closeImageZoom()"
+                class="absolute -top-12 right-0 text-white hover:text-gold-400 text-2xl transition-colors">
+                <i class="fa-solid fa-xmark"></i> Tutup
+            </button>
+            <img id="zoomedImageElement" src="" alt="Perbesar Foto"
+                class="max-h-[80vh] max-w-full mx-auto rounded-2xl shadow-2xl bg-white p-3 border-2 border-white/20 object-contain">
+            <div class="mt-4 flex justify-center gap-3">
+                <button type="button"
+                    onclick="downloadImage(document.getElementById('zoomedImageElement').src, 'foto-pembayaran.jpg')"
+                    class="px-5 py-2.5 bg-gold-500 text-navy-900 font-bold rounded-xl text-xs shadow-lg hover:bg-gold-400 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Unduh Foto Ini
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1090,18 +1599,156 @@
         mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 
 
-        // --- 4. PAYMENT MODAL LOGIC ---
+        // --- 4. PAYMENT & SETTINGS LOGIC (QRIS, SHOPEE, MANDIRI) ---
+        const DEFAULT_PAYMENT_CONFIG = {
+            qris_image: "https://cdn.corenexis.com/f/vB3JWanbPU7.jpeg",
+            shopee_image: "https://cdn.corenexis.com/f/sof6LO4WchN.png",
+            shopee_number: "081997600171",
+            shopee_name: "Media Journey Solution",
+            shopee_pay_url: "https://shopee.co.id",
+            mandiri_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Bank_Mandiri_logo_2016.svg/1200px-Bank_Mandiri_logo_2016.svg.png",
+            mandiri_account: "1370012345678",
+            mandiri_name: "PT MEDIA JOURNEY SOLUSI"
+        };
+
+        let currentPaymentSettings = { ...DEFAULT_PAYMENT_CONFIG };
+        let currentActivePaymentMethod = 'qris';
+        let currentSelectedPackage = 'Konsultasi Media Journey';
+
         const paymentModal = document.getElementById('paymentModal');
         const paymentCard = document.getElementById('paymentCard');
         const paymentOverlay = document.getElementById('paymentOverlay');
         const closePaymentBtn = document.getElementById('closePaymentBtn');
 
+        const paymentSettingsModal = document.getElementById('paymentSettingsModal');
+        const settingsCard = document.getElementById('settingsCard');
+
+        const imageZoomModal = document.getElementById('imageZoomModal');
+        const zoomedImageElement = document.getElementById('zoomedImageElement');
+
+        // Initial Load Payment Settings
+        async function loadPaymentSettings() {
+            // First check local storage
+            try {
+                const localData = localStorage.getItem('mj_payment_settings');
+                if (localData) {
+                    const parsed = JSON.parse(localData);
+                    // Migrasikan jika masih menggunakan link qrserver lama atau link html kommodo yang rusak
+                    if (!parsed.qris_image || parsed.qris_image.includes('api.qrserver.com') || parsed.qris_image.includes('kommodo.ai')) {
+                        parsed.qris_image = DEFAULT_PAYMENT_CONFIG.qris_image;
+                    }
+                    if (!parsed.shopee_image || parsed.shopee_image.includes('kommodo.ai')) {
+                        parsed.shopee_image = DEFAULT_PAYMENT_CONFIG.shopee_image;
+                    }
+                    currentPaymentSettings = Object.assign({}, DEFAULT_PAYMENT_CONFIG, parsed);
+                }
+            } catch (err) {
+                console.warn("Gagal membaca settings dari localStorage:", err);
+            }
+
+            // Then try fetch from backend API
+            try {
+                const res = await fetch('/api/payment-settings');
+                if (res.ok) {
+                    const data = await res.json();
+                    currentPaymentSettings = Object.assign({}, currentPaymentSettings, data);
+                    localStorage.setItem('mj_payment_settings', JSON.stringify(currentPaymentSettings));
+                }
+            } catch (err) {
+                console.log("Menggunakan offline/local payment settings");
+            }
+
+            applyPaymentSettings(currentPaymentSettings);
+        }
+
+        // Apply to all card images, modal elements, and preview inputs
+        function applyPaymentSettings(settings) {
+            // Cards on page
+            const cardQris = document.getElementById('card-img-qris');
+            const cardShopee = document.getElementById('card-img-shopee');
+            const cardMandiri = document.getElementById('card-img-mandiri');
+
+            if (cardQris) cardQris.src = settings.qris_image || DEFAULT_PAYMENT_CONFIG.qris_image;
+            if (cardShopee) cardShopee.src = settings.shopee_image || DEFAULT_PAYMENT_CONFIG.shopee_image;
+            if (cardMandiri) cardMandiri.src = settings.mandiri_image || DEFAULT_PAYMENT_CONFIG.mandiri_image;
+
+            // Modal elements
+            const modalQris = document.getElementById('modal_qris_img');
+            const modalShopee = document.getElementById('modal_shopee_img');
+            const modalMandiri = document.getElementById('modal_mandiri_img');
+
+            if (modalQris) modalQris.src = settings.qris_image || DEFAULT_PAYMENT_CONFIG.qris_image;
+            if (modalShopee) modalShopee.src = settings.shopee_image || DEFAULT_PAYMENT_CONFIG.shopee_image;
+            if (modalMandiri) modalMandiri.src = settings.mandiri_image || DEFAULT_PAYMENT_CONFIG.mandiri_image;
+
+            const modalShopeeNum = document.getElementById('modal_shopee_number');
+            const modalShopeeName = document.getElementById('modal_shopee_name');
+            if (modalShopeeNum) modalShopeeNum.textContent = settings.shopee_number || DEFAULT_PAYMENT_CONFIG.shopee_number;
+            if (modalShopeeName) modalShopeeName.textContent = 'a.n ' + (settings.shopee_name || DEFAULT_PAYMENT_CONFIG.shopee_name);
+
+            const modalMandiriAcc = document.getElementById('modal_mandiri_account');
+            const modalMandiriName = document.getElementById('modal_mandiri_name');
+            if (modalMandiriAcc) modalMandiriAcc.textContent = settings.mandiri_account || DEFAULT_PAYMENT_CONFIG.mandiri_account;
+            if (modalMandiriName) modalMandiriName.textContent = 'a.n ' + (settings.mandiri_name || DEFAULT_PAYMENT_CONFIG.mandiri_name);
+
+            // Populate Settings Form inputs & previews
+            const inQris = document.getElementById('input_qris_image');
+            const inShopee = document.getElementById('input_shopee_image');
+            const inShopeeNum = document.getElementById('input_shopee_number');
+            const inShopeeName = document.getElementById('input_shopee_name');
+            const inMandiri = document.getElementById('input_mandiri_image');
+            const inMandiriAcc = document.getElementById('input_mandiri_account');
+            const inMandiriName = document.getElementById('input_mandiri_name');
+
+            if (inQris) inQris.value = settings.qris_image || '';
+            if (inShopee) inShopee.value = settings.shopee_image || '';
+            if (inShopeeNum) inShopeeNum.value = settings.shopee_number || '';
+            if (inShopeeName) inShopeeName.value = settings.shopee_name || '';
+            if (inMandiri) inMandiri.value = settings.mandiri_image || '';
+            if (inMandiriAcc) inMandiriAcc.value = settings.mandiri_account || '';
+            if (inMandiriName) inMandiriName.value = settings.mandiri_name || '';
+
+            // Update live preview in setting modal
+            updateSettingPreview('qris', settings.qris_image);
+            updateSettingPreview('shopee', settings.shopee_image);
+            updateSettingPreview('mandiri', settings.mandiri_image);
+        }
+
+        // Real-time preview when user types or pastes image URLs
+        function updateSettingPreview(type, url) {
+            const previewEl = document.getElementById(`preview_${type}_setting`);
+            if (!previewEl) return;
+            if (url && url.trim().length > 0) {
+                previewEl.src = url.trim();
+            } else {
+                previewEl.src = DEFAULT_PAYMENT_CONFIG[`${type}_image`];
+            }
+        }
+
+        // Open Payment Modal
         function openPaymentModal(packageName) {
-            document.getElementById('modalPackageName').textContent = "Paket " + packageName;
+            currentSelectedPackage = packageName || 'Konsultasi Media Journey';
+            const nameEl = document.getElementById('modalPackageName');
+            if (nameEl) nameEl.textContent = "Paket " + currentSelectedPackage;
+
+            // Default buka tab QRIS dan tampilkan foto QRIS yang aktif
+            switchPaymentTab('qris');
+            const modalQris = document.getElementById('modal_qris_img');
+            if (modalQris) {
+                const targetQris = currentPaymentSettings.qris_image || DEFAULT_PAYMENT_CONFIG.qris_image;
+                modalQris.src = targetQris;
+            }
+
             paymentModal.classList.remove('opacity-0', 'pointer-events-none');
             paymentCard.classList.remove('scale-95');
             paymentCard.classList.add('scale-100');
             document.body.style.overflow = 'hidden';
+        }
+
+        // Open Payment Modal and directly focus on specific method (qris, shopee, mandiri)
+        function openPaymentModalWithMethod(method, packageName = 'Starter') {
+            openPaymentModal(packageName);
+            switchPaymentTab(method);
         }
 
         function closePaymentModal() {
@@ -1111,22 +1758,310 @@
             document.body.style.overflow = 'auto';
         }
 
-        function closePaymentModalAndScroll() {
+        // Switch Tab within Payment Modal
+        function switchPaymentTab(method) {
+            currentActivePaymentMethod = method;
+
+            const tabQris = document.getElementById('tabBtnQris');
+            const tabShopee = document.getElementById('tabBtnShopee');
+            const tabMandiri = document.getElementById('tabBtnMandiri');
+
+            const panelQris = document.getElementById('tabPanelQris');
+            const panelShopee = document.getElementById('tabPanelShopee');
+            const panelMandiri = document.getElementById('tabPanelMandiri');
+
+            // Reset tab styles
+            [tabQris, tabShopee, tabMandiri].forEach(btn => {
+                btn?.classList.remove('bg-white', 'text-emerald-700', 'text-orange-600', 'text-blue-600', 'shadow-sm', 'border', 'border-emerald-200', 'border-orange-200', 'border-blue-200', 'font-extrabold');
+                btn?.classList.add('text-slate-600', 'font-bold');
+            });
+
+            // Hide panels
+            panelQris?.classList.add('hidden');
+            panelShopee?.classList.add('hidden');
+            panelMandiri?.classList.add('hidden');
+
+            // Activate chosen
+            if (method === 'qris') {
+                tabQris?.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-emerald-200', 'font-extrabold');
+                tabQris?.classList.remove('text-slate-600');
+                panelQris?.classList.remove('hidden');
+            } else if (method === 'shopee') {
+                tabShopee?.classList.add('bg-white', 'text-orange-600', 'shadow-sm', 'border', 'border-orange-200', 'font-extrabold');
+                tabShopee?.classList.remove('text-slate-600');
+                panelShopee?.classList.remove('hidden');
+            } else if (method === 'mandiri') {
+                tabMandiri?.classList.add('bg-white', 'text-blue-600', 'shadow-sm', 'border', 'border-blue-200', 'font-extrabold');
+                tabMandiri?.classList.remove('text-slate-600');
+                panelMandiri?.classList.remove('hidden');
+            }
+        }
+
+        // Open & Close Payment Settings Modal
+        function openPaymentSettingsModal() {
+            paymentSettingsModal.classList.remove('opacity-0', 'pointer-events-none');
+            settingsCard.classList.remove('scale-95');
+            settingsCard.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            applyPaymentSettings(currentPaymentSettings);
+        }
+
+        function closePaymentSettingsModal() {
+            paymentSettingsModal.classList.add('opacity-0', 'pointer-events-none');
+            settingsCard.classList.remove('scale-100');
+            settingsCard.classList.add('scale-95');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Save Settings Form Handler
+        async function handleSaveSettings(e) {
+            e.preventDefault();
+            const saveBtn = document.getElementById('saveSettingsBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+
+            const newSettings = {
+                qris_image: document.getElementById('input_qris_image').value.trim() || DEFAULT_PAYMENT_CONFIG.qris_image,
+                shopee_image: document.getElementById('input_shopee_image').value.trim() || DEFAULT_PAYMENT_CONFIG.shopee_image,
+                shopee_number: document.getElementById('input_shopee_number').value.trim() || DEFAULT_PAYMENT_CONFIG.shopee_number,
+                shopee_name: document.getElementById('input_shopee_name').value.trim() || DEFAULT_PAYMENT_CONFIG.shopee_name,
+                shopee_pay_url: DEFAULT_PAYMENT_CONFIG.shopee_pay_url,
+                mandiri_image: document.getElementById('input_mandiri_image').value.trim() || DEFAULT_PAYMENT_CONFIG.mandiri_image,
+                mandiri_account: document.getElementById('input_mandiri_account').value.trim() || DEFAULT_PAYMENT_CONFIG.mandiri_account,
+                mandiri_name: document.getElementById('input_mandiri_name').value.trim() || DEFAULT_PAYMENT_CONFIG.mandiri_name
+            };
+
+            currentPaymentSettings = newSettings;
+            localStorage.setItem('mj_payment_settings', JSON.stringify(newSettings));
+            applyPaymentSettings(newSettings);
+
+            // Sync with backend API
+            try {
+                await fetch('/api/payment-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newSettings)
+                });
+            } catch (err) {
+                console.log("Disimpan secara lokal di browser:", err);
+            }
+
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Link Foto';
+            closePaymentSettingsModal();
+
+            Swal.fire({
+                title: 'Berhasil Disimpan!',
+                text: 'Link foto QRIS, Shopee, dan Mandiri telah diperbarui dan langsung tampil di website.',
+                icon: 'success',
+                confirmButtonColor: '#0a192f',
+                confirmButtonText: 'Mantap!'
+            });
+        }
+
+        // Reset Settings to Default
+        function resetPaymentSettingsToDefault() {
+            Swal.fire({
+                title: 'Reset ke Gambar Default?',
+                text: 'Semua link foto akan dikembalikan ke gambar standar bawaan sistem.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0a192f',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Reset',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    currentPaymentSettings = { ...DEFAULT_PAYMENT_CONFIG };
+                    localStorage.setItem('mj_payment_settings', JSON.stringify(currentPaymentSettings));
+                    applyPaymentSettings(currentPaymentSettings);
+
+                    try {
+                        await fetch('/api/payment-settings', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(DEFAULT_PAYMENT_CONFIG)
+                        });
+                    } catch (e) { }
+
+                    Swal.fire('Selesai!', 'Gambar pembayaran telah direset ke bawaan.', 'success');
+                }
+            });
+        }
+
+        // Zoom Image Modal
+        function zoomImage(imageUrl) {
+            if (!imageUrl) return;
+            zoomedImageElement.src = imageUrl;
+            imageZoomModal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageZoom() {
+            imageZoomModal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Copy to clipboard with toast notification
+        function copyToClipboard(text, label = 'Teks') {
+            if (!text) return;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                ta.style.position = "fixed";
+                ta.style.left = "-9999px";
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: `${label} berhasil disalin!`,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+        }
+
+        // Download Image Helper
+        async function downloadImage(url, filename) {
+            if (!url) return;
+            filename = filename || 'pembayaran-media-journey.jpg';
+
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'info',
+                title: 'Mengunduh foto pembayaran...',
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('Fetch failed');
+                const blob = await res.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            } catch (err) {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+        // Open Shopee App or Website
+        function openShopeePayment() {
+            const shopeeUrl = currentPaymentSettings.shopee_pay_url || 'https://shopee.co.id';
+            window.open(shopeeUrl, '_blank');
+        }
+
+        // Open Livin by Mandiri
+        function openLivinMandiri() {
+            window.open('https://bankmandiri.co.id', '_blank');
+        }
+
+        // Confirm Payment via WhatsApp
+        function confirmPaymentViaWhatsApp(methodName) {
+            const waNumber = '6281997600171';
+            const pkgName = document.getElementById('modalPackageName')?.textContent || 'Paket Konsultasi';
+            const text = `Halo Media Journey Solution! 👋%0A%0ASaya ingin mengonfirmasi pembayaran untuk *${encodeURIComponent(pkgName)}* melalui metode *${encodeURIComponent(methodName)}*.%0A%0AMohon bantuan verifikasinya ya kak. Bukti transfer sudah saya simpan. Terima kasih!`;
+            window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+        }
+
+        // Simulate Interactive Payment Success Action
+        function simulatePaymentSuccess(methodName) {
+            const pkgName = document.getElementById('modalPackageName')?.textContent || 'Paket Konsultasi';
+            const randomCode = 'MJS-' + methodName.replace(/\s+/g, '').toUpperCase() + '-' + Math.floor(100000 + Math.random() * 900000);
+
+            Swal.fire({
+                title: 'Memverifikasi Transaksi...',
+                html: '<div class="text-sm text-slate-500">Mengecek status pembayaran Anda secara realtime...</div>',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                timer: 1400
+            }).then(() => {
+                Swal.fire({
+                    title: 'Pembayaran Diterima!',
+                    html: `
+                        <div class="text-left bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs sm:text-sm space-y-2 mt-2">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Paket:</span>
+                                <span class="font-bold text-navy-900">${pkgName}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Metode:</span>
+                                <span class="font-bold text-emerald-700">${methodName}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">No. Referensi:</span>
+                                <span class="font-mono font-bold text-navy-900">${randomCode}</span>
+                            </div>
+                            <div class="flex justify-between border-t border-slate-200 pt-2">
+                                <span class="text-slate-500">Status:</span>
+                                <span class="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded text-xs">BERHASIL DIBAYAR</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4">Tim Media Journey akan segera menghubungi WhatsApp Anda untuk kick-off onboarding.</p>
+                    `,
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a192f',
+                    cancelButtonColor: '#10b981',
+                    confirmButtonText: 'Tutup & Selesai',
+                    cancelButtonText: '<i class="fa-brands fa-whatsapp"></i> Chat WhatsApp'
+                }).then((res) => {
+                    if (res.dismiss === Swal.DismissReason.cancel) {
+                        confirmPaymentViaWhatsApp(methodName);
+                    }
+                    closePaymentModal();
+                });
+            });
+        }
+
+        // Close Modal & Scroll to Contact Form
+        function closePaymentModalAndScroll(methodName = 'QRIS') {
             closePaymentModal();
             setTimeout(() => {
                 const targetForm = document.getElementById('formulir');
-                targetForm.scrollIntoView({ behavior: 'smooth' });
+                if (targetForm) {
+                    targetForm.scrollIntoView({ behavior: 'smooth' });
+                }
 
-                // Auto-fill pesan di form
-                const pkgName = document.getElementById('modalPackageName').textContent;
-                document.getElementById('message').value = "Halo, saya telah melalukan pembayaran untuk " + pkgName + " via QRIS. Berikut adalah bukti pembayarannya: (Lampirkan Bukti)";
+                const pkgName = document.getElementById('modalPackageName')?.textContent || 'Paket Konsultasi';
+                const messageEl = document.getElementById('message');
+                if (messageEl) {
+                    messageEl.value = `Halo, saya telah melakukan pembayaran untuk ${pkgName} via ${methodName}. Mohon info langkah selanjutnya!`;
+                }
 
-                setTimeout(() => document.getElementById('name').focus(), 800);
+                setTimeout(() => document.getElementById('name')?.focus(), 800);
             }, 300);
         }
 
         closePaymentBtn?.addEventListener('click', closePaymentModal);
         paymentOverlay?.addEventListener('click', closePaymentModal);
+
+        // Run Load Payment Settings on DOM ready
+        document.addEventListener('DOMContentLoaded', loadPaymentSettings);
+        loadPaymentSettings();
 
         // --- 5. NAVBAR SCROLL EFFECT ---
         window.addEventListener('scroll', () => {
